@@ -1,6 +1,5 @@
 import streamlit as st
 import cv2
-import PIL
 from PIL import Image, ImageOps
 import numpy as np 
 
@@ -34,15 +33,6 @@ else:
     image = Image.open(file)
     st.image(image, use_column_width=True)
     prediction = import_and_predict(image, model)
-    
-    # st.write(prediction)
-
-    # if np.argmax(prediction) == 0:
-    #     st.write("It is a paper!")
-    # elif np.argmax(prediction) == 1:
-    #     st.write("It is a rock!")
-    # else:
-    #     st.write("It is a scissor!")
     
     st.text("Probability (0: COVID, 1: NORMAL, 2: Viral Pneumonia")
     st.write(prediction)
