@@ -5,14 +5,14 @@ import numpy as np
 
 import tensorflow as tf
 
-model_name = 'Models/VGG16_final_model/VGG16_model.h5'
-model = tf.keras.models.load_model(model_name, compile=False)
+model_name = '/content/drive/MyDrive/Data Analysis Bootcamp/Resources/VGG16_model.h5'
+model = tf.keras.models.load_model(model_name)
 
 st.write("""
          # COVID-19 and Viral Pneumonia Predictions
          """
          )
-st.write("This is a simple image classification web app to predict if a patient has COVID-19, Viral Pneumonia or is Healthy")
+st.write("This is a simple image classification web app to predict if a patient has COVID-19, Viral Pneumonia or is Healthy from chest X-Rays")
 file = st.file_uploader("Please upload an image file", type=["jpg", "png"])
 
 def import_and_predict(image_data, model):
@@ -35,5 +35,14 @@ else:
     st.image(image, use_column_width=True)
     prediction = import_and_predict(image, model)
     
-    st.text("Probability (0: COVID, 1: NORMAL, 2: Viral Pneumonia")
+    max = np.max(prediction)
+    
+    if prediction[0][0]==max:
+      st.text("The prediction is COVID")
+    if prediction[0][1]==max:
+      st.text("The prediction is NORMAL")
+    if prediction[0][2]==max:
+      st.text("The prediction is Viral Pneumonia")
+    
+    st.text("Likelihood 0: COVID, 1: NORMAL, 2: Viral Pneumonia")
     st.write(prediction)
